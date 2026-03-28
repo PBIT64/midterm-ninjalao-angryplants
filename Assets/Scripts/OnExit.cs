@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class OnExit : MonoBehaviour
 {
     public void StartGame() {
-        SceneManager.LoadScene("DemoGameplay");
+        SceneManager.LoadScene("DemoLevel");
     }
     public void Exit() {
         Application.Quit();
