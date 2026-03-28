@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // Rotate LeftRight
         if (Keyboard.current.aKey.isPressed)
