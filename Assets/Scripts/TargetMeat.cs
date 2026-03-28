@@ -1,13 +1,14 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TargetMeat : MonoBehaviour
 {
+    [SerializeField] PlayerScore playerScore;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.name == "Floor")
+        if (collision.gameObject.name == "Floor")
         {
+            playerScore.GiveScore();
             Destroy(gameObject);
         }
     }

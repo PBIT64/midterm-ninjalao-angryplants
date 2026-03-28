@@ -1,8 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] int BulletRemain = 10;
+    [SerializeField] TextMeshProUGUI text;
     [SerializeField] GameObject CamPosObject;
     [SerializeField] GameObject Slingshot;
     [SerializeField] GameObject SampleBullet;
@@ -11,8 +14,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float BulletSpeed = 150;
     bool ShootCD = false;
 
+    void UpdateBulletText()
+    {
+        text.text = $"Fruit Remains: {BulletRemain}";
+    }
+
     private void Start()
     {
+        UpdateBulletText();
     }
 
     void Reload()
@@ -23,9 +32,11 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        if (ShootCD) { return; }
+        if (ShootCD || BulletRemain <= 0) { return; }
         SampleBullet.SetActive(false);
         ShootCD = true;
+        BulletRemain--;
+        UpdateBulletText();
 
         // New Bullet
         GameObject bullet = Instantiate(SampleBullet);
@@ -33,12 +44,20 @@ public class PlayerController : MonoBehaviour
         // Extra Components
         SphereCollider sphereCollider = bullet.AddComponent<SphereCollider>();
         Rigidbody bulletRb = bullet.AddComponent<Rigidbody>();
+        bulletRb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         bulletRb.mass = 0.1f;
         bullet.transform.localScale = SampleBullet.transform.localScale;
         bullet.transform.position = CamPosObject.transform.position + CamPosObject.transform.forward;
         bullet.transform.rotation = CamPosObject.transform.rotation;
         bulletRb.AddForce(CamPosObject.transform.forward * BulletSpeed);
-        Invoke("Reload", 5f);
+        if (BulletRemain > 0)
+        {
+            Invoke("Reload", 5f);
+        }
+        else
+        {
+
+        }
     }
 
     // Update is called once per frame
