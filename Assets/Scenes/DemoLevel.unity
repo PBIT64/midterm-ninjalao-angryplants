@@ -1986,7 +1986,9 @@ MonoBehaviour:
   CamPosObject: {fileID: 5975675}
   Slingshot: {fileID: 1067677418}
   SampleBullet: {fileID: 1873348807}
+  CurretCamera: {fileID: 1779411531}
   HoverSpeed: 1
+  BulletSpeed: 100
 --- !u!1001 &1098062731
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using GLTFast.Schema;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,9 +6,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject CamPosObject;
     [SerializeField] GameObject Slingshot;
     [SerializeField] GameObject SampleBullet;
+    [SerializeField] GameObject CurretCamera;
     [SerializeField] float HoverSpeed = 1;
+    [SerializeField] float BulletSpeed = 100;
+    Camera Cam;
     bool ShootCD = false;
-    
+
+    private void Start()
+    {
+        Camera Cam = GetComponent<Camera>();
+    }
+
     void Reload()
     {
         SampleBullet.SetActive(true);
@@ -29,9 +36,10 @@ public class PlayerController : MonoBehaviour
         SphereCollider sphereCollider = bullet.AddComponent<SphereCollider>();
         Rigidbody bulletRb = bullet.AddComponent<Rigidbody>();
         bulletRb.mass = 0.1f;
-        bullet.transform.position = CamPosObject.transform.position;
+        bullet.transform.localScale = SampleBullet.transform.localScale;
+        bullet.transform.position = CamPosObject.transform.position + CamPosObject.transform.forward;
         bullet.transform.rotation = CamPosObject.transform.rotation;
-        bulletRb.AddRelativeForce(new Vector3(0,0,-100));
+        bulletRb.AddForce(CamPosObject.transform.forward * BulletSpeed);
         Invoke("Reload", 5f);
     }
 
@@ -60,6 +68,17 @@ public class PlayerController : MonoBehaviour
         if (!ShootCD && Keyboard.current.spaceKey.isPressed)
         {
             Shoot();
+        }
+        if (Mouse.current.scroll.ReadValue().y != 0)
+        {
+            if (Mouse.current.scroll.ReadValue().y > 0)
+            {
+                Cam.fieldOfView = Mathf.Clamp(Cam.fieldOfView - 1, 10, 60);
+            }
+            else
+            {
+                Cam.fieldOfView = Mathf.Clamp(Cam.fieldOfView + 1, 10, 60);
+            }
         }
     }
 }
