@@ -5,10 +5,15 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject CamPosObject;
     [SerializeField] GameObject Slingshot;
+    [SerializeField] GameObject SampleBullet;
     [SerializeField] float HoverSpeed = 1;
-    void Start()
+    bool ShootCD = false;
+    
+    void Shoot()
     {
-        
+        if (ShootCD) { return; }
+        SampleBullet.SetActive(false);
+        ShootCD = true;
     }
 
     // Update is called once per frame
@@ -31,6 +36,11 @@ public class PlayerController : MonoBehaviour
         else if (Keyboard.current.sKey.isPressed)
         {
             CamPosObject.transform.Rotate(new Vector3(HoverSpeed,0, 0));
+        }
+
+        if (!ShootCD)
+        {
+            Shoot();
         }
     }
 }
