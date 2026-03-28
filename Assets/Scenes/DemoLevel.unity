@@ -5141,6 +5141,7 @@ MonoBehaviour:
   CurretCamera: {fileID: 1779411531}
   HoverSpeed: 1
   BulletSpeed: 200
+  GameResulter: {fileID: 101147723}
 --- !u!114 &1067677423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5154,6 +5155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScore
   ScoreTable: {fileID: 193522280}
+  gameResulter: {fileID: 101147723}
 --- !u!1001 &1082882841
 PrefabInstance:
   m_ObjectHideFlags: 0
